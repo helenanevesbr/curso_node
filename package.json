@@ -1,0 +1,22 @@
+{
+  "name": "portal_noticias",
+  "version": "1.0.0",
+  "description": "site de noticias",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helenanevesbr/curso_node.git"
+  },
+  "keywords": [
+    "Helena"
+  ],
+  "author": "Helena",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/helenanevesbr/curso_node/issues"
+  },
+  "homepage": "https://github.com/helenanevesbr/curso_node#readme"
+}
