@@ -1,30 +1,22 @@
+var dbConnection = require('../../config/dbConnection'); //O require no arquivo rota + o comando exports no arquivo dbConnection se comunicam para que a função dentro de module.exports do arquivo dbConnection possa ser recuperada dentro da variável dbConnection no arquivo rota.
+
 module.exports = function (app) { //app é um parâmetro. No app.js é uma variável de inclusão do módulo server, que no server.js é a implementação do Express. Para que a informção de app seja recebida por este módulo e dentro do escopo da função, precisamos passar ela por parametro.
+
+    var connection = dbConnection();/*acima é a função em si. Com dbConnection() estamos executando a função
+     perceba que a varíavel connection que usamos para conectar com o banco de dados é a mesma que utiliamos para executar a query logo abaixo*/
+
     app.get('/noticias', function (req, res) {
-
-        /*1° passo) baixar o banco de dados MySQL em si no site oficial e, pelo command prompt, um módulo que funciona como um drive de conexão entre nossa aplicação escrita em javascript rodando no node com o banco de dados SQL (Para acessar para gravar dados na SQL).
-         * 2º passo) criar um banco de dados chamado noticias, e uma tabela dentro dele onde vamos inserir linhas
-         * 3° passo) acessar "Serviços" no Windows e colocar MySQL para iniciar serviço
-         * 4° passo) acessar executável do mysql pelo prompt de comando*/
-
-        var mysql = require('mysql');//Isso está incorporando à aplicação o módulo baixado no passo 1
-
-        var connection = mysql.createConnection({//createConnection é uma função do módulo MySQL. Os parâmetros dessa conexão são passados em uma estrutura JSON, como você pode ver abaixo.
-            host: 'localhost', //endereço do servidor. No caso está instalado na própria máquina que o está rodando.
-            user: 'helena',
-            password: 'password',
-            database: 'portal_noticias',
-        });
-        
+    
         connection.query('select * from noticias', function (error, result) { /*query é uma função (comando) que espera 2 coisas: o sql e uma função de callback. SQL é a consulta ao banco de dados, callback é o que vai ser feito após a consulta ser realizada.
          * Especificamente sendo função desse módulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atravéz dessa variável*/
             if (error) {
                 res.send(error);
             }
             else {
-                res.send(result);
+                //res.send(result) iria cuspir o resultados recuperados do banco de dados na forma de json. Mas o interessante é criar uma view dinâmica, ou seja: dentro da view, escrever código javascript junto com a codificação estática html.
+                res.render("noticias/noticias", { noticias: result }) /*"noticias/noticias" informa qual a view irá renderizar o conetúdo do banco de dados. O {noticias : result} é o json. Os results vão ser recebidos na nossa view como se fosse uma variável chamada "noticias".
+                 * Essa variável vai se comportar como uma array. Exemplo: 2 linhas da tabela do banco de dados são o índice 1 e 2 da array -- [{titulo: "titulo da noticia", noticia:"conteudo da noticia"}, {titulo: "outra noticia", noticia:"conteudo da outra noticia"}]*/
             }
         });
-
-        //res.render("noticias/noticias");
     });
 };
