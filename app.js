@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
  * 
     var rotaHome = require('./app/routes/home');
     rotaHome(app); //equivalente à chamar function (app){} dentro do módulo home.js
-
+ 
     var rotaNoticias = require('./app/routes/noticias')(app);//com o ejs, nós podemos chamar a função de qualquer módulo (no caso, do noticias.js) de maneira mais simples do que o exemplo acima
 
     var rotaFormInclusaoNoticia = require('./app/routes/formulario_inclusao_noticia')(app);*/
