@@ -18,7 +18,7 @@
 			<!--- se a variável noticias (Encontrar no módulo "noticias.js" -- res.render("noticias/noticias", { noticias: result })) funciona como uma array, podemos criar um loop que vai pegar todos os índices da array e exibir o banco de dados inteiro. --->
 			<% for(var i=0; i < noticias.length; i++) { %>
 				<tr>
-					<td><%= noticias[i].id %></td> <!---Tudo entre as duas tags <% %> avi ser interpretado pelo Javascript--->
+					<td><%= noticias[i].id %></td> <!---Tudo entre as duas tags <% %> vai ser interpretado pelo Javascript--->
 					<td><%= noticias[i].titulo %></td><!---funciona como valor da propriedade titulo do objeto sem nome que ocupa a posição i dentro da array noticias. Para visualizar a tabela do banco de dados, imagine como a célula na coluna titulo e linha i--->
 					<td><%= noticias[i].noticia %></td>
 				</tr>

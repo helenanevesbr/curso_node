@@ -1,25 +1,27 @@
-var app = require('./config/server');//estamos modulando(separar em módulos) dentro da nossa aplicação o código de infraestrutura do código de negócio.
+var app = require('./config/server');//estamos modulando(separar em mï¿½dulos) dentro da nossa aplicaï¿½ï¿½o o cï¿½digo de infraestrutura do cï¿½digo de negï¿½cio.
 
-/*app.get('/', function (req, res) { //O símbolo de / se refere ao endereço raiz, ou seja, o que vai aparecer quando você requisitar no navegador apenas "localhost:3000". Isso é a home da nossa página, aka diretório principal.
-    res.send("<html><body>Portal de Notícias</body></html>")//com base no request da página home, ele envia uma resposta
+/*app.get('/', function (req, res) { //O sï¿½mbolo de / se refere ao endereï¿½o raiz, ou seja, o que vai aparecer quando vocï¿½ requisitar no navegador apenas "localhost:3000". Isso ï¿½ a home da nossa pï¿½gina, aka diretï¿½rio principal.
+    res.send("<html><body>Portal de Notï¿½cias</body></html>")//com base no request da pï¿½gina home, ele envia uma resposta
 })
-//O express permite simplificar a rota de requisição-resposta. Usávamos o método end quando trabalhavamos diretamente com o node, e aqui usamos o método send
+//O express permite simplificar a rota de requisiï¿½ï¿½o-resposta. Usï¿½vamos o mï¿½todo end quando trabalhavamos diretamente com o node, e aqui usamos o mï¿½todo send
 
 app.get('/', function (req, res) {
-    res.render("home/index");//com a inclusão do EJS, o Express passou a ter o método render
-});*/
+    res.render("home/index");//com a inclusï¿½o do EJS, o Express passou a ter o mï¿½todo render
+});
+*/
 
-/*Esse código foi substituído depois que o módulo consign foi instalado. Sem o cosign, as rotas precisariam ser carregadas no app.js uma à uma e precisariamos de um require para cada uma delas. Procurar "consign().include" no módulo server.js para ver a diferença.
+/*Esse cï¿½digo foi substituï¿½do depois que o mï¿½dulo consign foi instalado. Sem o cosign, as rotas precisariam ser carregadas no app.js uma ï¿½ uma e precisariamos de um require para cada uma delas. Procurar "consign().include" no mï¿½dulo server.js para ver a diferenï¿½a.
  * 
     var rotaHome = require('./app/routes/home');
-    rotaHome(app); //equivalente à chamar function (app){} dentro do módulo home.js
+    rotaHome(app); //equivalente ï¿½ chamar function (app){} dentro do mï¿½dulo home.js
  
-    var rotaNoticias = require('./app/routes/noticias')(app);//com o ejs, nós podemos chamar a função de qualquer módulo (no caso, do noticias.js) de maneira mais simples do que o exemplo acima
+    var rotaNoticias = require('./app/routes/noticias')(app);//com o ejs, nï¿½s podemos chamar a funï¿½ï¿½o de qualquer mï¿½dulo (no caso, do noticias.js) de maneira mais simples do que o exemplo acima
 
-    var rotaFormInclusaoNoticia = require('./app/routes/formulario_inclusao_noticia')(app);*/
+    var rotaFormInclusaoNoticia = require('./app/routes/formulario_inclusao_noticia')(app);
+*/
 
-app.listen(3000, function () { /*método listen fica escutando requisições em uma determinada porta. Ele sobe o servidor que vai ficar escutando na porta.
- * A função por parâmetro é uma função de callback. Ela é executada na subida do servidor. No exemplo, apenas executamos uma mensagem no console*/
+app.listen(3000, function () { /*mï¿½todo listen fica escutando requisiï¿½ï¿½es em uma determinada porta. Ele sobe o servidor que vai ficar escutando na porta.
+ * A funï¿½ï¿½o por parï¿½metro ï¿½ uma funï¿½ï¿½o de callback. Ela ï¿½ executada na subida do servidor. No exemplo, apenas executamos uma mensagem no console*/
     console.log("Servidor ON");
     //console.log(msg);
 });
