@@ -2,11 +2,11 @@
 	<html lang="pt-br">
 		<head>
 			<meta charset="utf-8"/>
-			<title>Notícias</title>
+			<title>Notï¿½cias</title>
 		</head>
 	<body>
 
-		<h1>Notícias</h1>
+		<h1>Notï¿½cias</h1>
 
 		<table>
 			<tr>
@@ -15,14 +15,14 @@
 				<td>Noticia</td>
 			</tr>
 
-			<!--- se a variável noticias (Encontrar no módulo "noticias.js" -- res.render("noticias/noticias", { noticias: result })) funciona como uma array, podemos criar um loop que vai pegar todos os índices da array e exibir o banco de dados inteiro. --->
+			<!--- se a variï¿½vel noticias (Encontrar no mï¿½dulo "noticias.js" -- res.render("noticias/noticias", { noticias: result })) funciona como uma array, podemos criar um loop que vai pegar todos os ï¿½ndices da array e exibir o banco de dados inteiro. --->
 			<% for(var i=0; i < noticias.length; i++) { %>
 				<tr>
 					<td><%= noticias[i].id %></td> <!---Tudo entre as duas tags <% %> vai ser interpretado pelo Javascript--->
-					<td><%= noticias[i].titulo %></td><!---funciona como valor da propriedade titulo do objeto sem nome que ocupa a posição i dentro da array noticias. Para visualizar a tabela do banco de dados, imagine como a célula na coluna titulo e linha i--->
+					<td><%= noticias[i].titulo %></td><!---funciona como valor da propriedade titulo do objeto sem nome que ocupa a posiï¿½ï¿½o i dentro da array noticias. Para visualizar a tabela do banco de dados, imagine como a cï¿½lula na coluna titulo e linha i--->
 					<td><%= noticias[i].noticia %></td>
 				</tr>
-			<% } %> <!---isso aqui é o fim do loop for. Tem que estar entre essas tags para ser interpretado pelo Javascript.--->
+			<% } %> <!---isso aqui ï¿½ o fim do loop for. Tem que estar entre essas tags para ser interpretado pelo Javascript.--->
 		</table>
 
 	</body>

@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/helenanevesbr/curso_node#readme",
   "dependencies": {
-    "body-parser": "^1.17.2"
+    "body-parser": "^1.17.2",
+    "express-validator": "3.2.0"
   }
 }

@@ -1,27 +1,29 @@
 // JavaScript source code
-//Node é uma plataforma que executa códigos javascript e o express é uma framework, uma camada que vai acima do node para fazer uma interface entre nossos scripts e o node.
+//Node ï¿½ uma plataforma que executa cï¿½digos javascript e o express ï¿½ uma framework, uma camada que vai acima do node para fazer uma interface entre nossos scripts e o node.
 
-var express = require('express'); //o require do módulo (aka biblioteca) do express retorna uma função, mas não chama ela. Agora tem uma função contida na variável express.
-var consign = require('consign'); //recuperando módulo
+var express = require('express'); //o require do mï¿½dulo (aka biblioteca) do express retorna uma funï¿½ï¿½o, mas nï¿½o chama ela. Agora tem uma funï¿½ï¿½o contida na variï¿½vel express.
+var consign = require('consign'); //recuperando mï¿½dulo
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator')
 
-var app = express(); //é necessário que chamemos a função.
-/*var msg = require('./mod_teste')();//sempre que um módulo retorna uma função, é necessário que executemos essa função (no caso basta "()" porque a função é anônima -- só checar o código dentro do arquivo mod_teste). Em var express e var app estamos fazendo a mesma coisa.
-//como o módulo está dentro do diretório curso_node, é boa prática utilizar o "./" */
+var app = express(); //ï¿½ necessï¿½rio que chamemos a funï¿½ï¿½o.
+/*var msg = require('./mod_teste')();//sempre que um mï¿½dulo retorna uma funï¿½ï¿½o, ï¿½ necessï¿½rio que executemos essa funï¿½ï¿½o (no caso basta "()" porque a funï¿½ï¿½o ï¿½ anï¿½nima -- sï¿½ checar o cï¿½digo dentro do arquivo mod_teste). Em var express e var app estamos fazendo a mesma coisa.
+//como o mï¿½dulo estï¿½ dentro do diretï¿½rio curso_node, ï¿½ boa prï¿½tica utilizar o "./" */
 
-app.set('view engine', 'ejs');//Essa linha informa para o Express que seu engine (motor) de views passou a ser o módulo EJS. A propriedade que queremos ajustar do Express é o "view engine".
-app.set('views', './app/views');//apontar diretório de views padrão, onde o Express vai pesquisar as views. Propriedade: views. Parametro: ./app/views
+app.set('view engine', 'ejs');//Essa linha informa para o Express que seu engine (motor) de views passou a ser o mï¿½dulo EJS. A propriedade que queremos ajustar do Express ï¿½ o "view engine".
+app.set('views', './app/views');//apontar diretï¿½rio de views padrï¿½o, onde o Express vai pesquisar as views. Propriedade: views. Parametro: ./app/views
 
 console.log("Servidor correndo com EJS");
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressValidator());
 
-consign()//aqui está chamando a função criada na linha var consign = require('consign');
-    .include('app/routes')//include também é uma função. Diretório que quer incluir no servidor é um parâmetro.
-    .then('config/dbConnection.js')//para não ter que digitar um require('../../config/dbConnection') em cada arquivo da pasta rota.
-    //Se você não apontar a extensão do arquivo-- .js.O consign entenderia que dbConnection não é um módulo, mas um subdiretório da pasta config.
+consign()//aqui estï¿½ chamando a funï¿½ï¿½o criada na linha var consign = require('consign');
+    .include('app/routes')//include tambï¿½m ï¿½ uma funï¿½ï¿½o. Diretï¿½rio que quer incluir no servidor ï¿½ um parï¿½metro.
+    .then('config/dbConnection.js')//para nï¿½o ter que digitar um require('../../config/dbConnection') em cada arquivo da pasta rota.
+    //Se vocï¿½ nï¿½o apontar a extensï¿½o do arquivo-- .js.O consign entenderia que dbConnection nï¿½o ï¿½ um mï¿½dulo, mas um subdiretï¿½rio da pasta config.
     .then('app/models')
-    .into(app); //função include do consign faz o seguinte: executa um scam no diretório app/routes, recupera e inicializa os módulos dentro dele e atribui isso a variável app. Essa variável vai ser parâmetro (ou argumento)? da função export de muitos módulos (vários arquivos começam com module.exports = function (app)). Ou seja, todas as rotas, conexão com banco de dados e models estão carregados dentro variável app e atravéz dela os módulo tem condições de acessar qualquer rota, model e etc. Mas geralmente para de fato acessar, a rota/model/etc é atribuído a uma variável. Ex: ´rota noticia.js ---> var noticiasModel = app.app.models.noticiasModel;
-    //O consign pode fazer auto - load não apenas de rotas, mas também de arquivos de configração, de controles, etc...
+    .into(app); //funï¿½ï¿½o include do consign faz o seguinte: executa um scam no diretï¿½rio app/routes, recupera e inicializa os mï¿½dulos dentro dele e atribui isso a variï¿½vel app. Essa variï¿½vel vai ser parï¿½metro (ou argumento)? da funï¿½ï¿½o export de muitos mï¿½dulos (vï¿½rios arquivos comeï¿½am com module.exports = function (app)). Ou seja, todas as rotas, conexï¿½o com banco de dados e models estï¿½o carregados dentro variï¿½vel app e atravï¿½z dela os mï¿½dulo tem condiï¿½ï¿½es de acessar qualquer rota, model e etc. Mas geralmente para de fato acessar, a rota/model/etc ï¿½ atribuï¿½do a uma variï¿½vel. Ex: ï¿½rota noticia.js ---> var noticiasModel = app.app.models.noticiasModel;
+    //O consign pode fazer auto - load nï¿½o apenas de rotas, mas tambï¿½m de arquivos de configraï¿½ï¿½o, de controles, etc...
 
-module.exports = app;//o módulo do servidor agora está exportando o app, que engloba o express, o ejs e todos os módulos incluídos atravéz do consign. Espera que na função exportada por cada arquivo de consign (No caso 'app/routes' e 'config/dbConnection.js') que seu primeiro parametro seja "app", mas não é necessário.
+module.exports = app;//o mï¿½dulo do servidor agora estï¿½ exportando o app, que engloba o express, o ejs e todos os mï¿½dulos incluï¿½dos atravï¿½z do consign. Espera que na funï¿½ï¿½o exportada por cada arquivo de consign (No caso 'app/routes' e 'config/dbConnection.js') que seu primeiro parametro seja "app", mas nï¿½o ï¿½ necessï¿½rio.
