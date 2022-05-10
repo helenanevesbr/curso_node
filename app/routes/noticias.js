@@ -1,24 +1,24 @@
-/*var dbConnection = require('../../config/dbConnection'); //Desnecessário desde a instalação do módulo consign (ver arquivo server.js)*/
+/*var dbConnection = require('../../config/dbConnection'); //Desnecessï¿½rio desde a instalaï¿½ï¿½o do mï¿½dulo consign (ver arquivo server.js)*/
 
-module.exports = function (application) { //app é um parâmetro, mas não é ele o responsável pela conexão com o servidor (arquivo server.js exporta a variável app). O método consign incluindo todas as rotas e o dbConnection.js faz o equivalente a adicionar require('../../config/server') em cada uma das rotas. Dessa forma, essa conexão não precisa ser estabelecida explicitamente. OBS: Não existia requisição do server nessa rota antes do método consign porque ele não precisava se conectar ao servidor para conseguir o dbConnection. Ele requisitava o dbConnection diretamente.
+module.exports = function (application) { //app ï¿½ um parï¿½metro, mas nï¿½o ï¿½ ele o responsï¿½vel pela conexï¿½o com o servidor (arquivo server.js exporta a variï¿½vel app). O mï¿½todo consign incluindo todas as rotas e o dbConnection.js faz o equivalente a adicionar require('../../config/server') em cada uma das rotas. Dessa forma, essa conexï¿½o nï¿½o precisa ser estabelecida explicitamente. OBS: Nï¿½o existia requisiï¿½ï¿½o do server nessa rota antes do mï¿½todo consign porque ele nï¿½o precisava se conectar ao servidor para conseguir o dbConnection. Ele requisitava o dbConnection diretamente.
 
-    /*var connection = dbConnection();//var dbConnection = require (linhas acima) era a função em si. Com dbConnection() estávamos executando a função. Perceba que a varíavel connection que usamos para conectar com o banco de dados é a mesma que utilizamos para executar a query (connection.query) logo abaixo*/
+    /*var connection = dbConnection();//var dbConnection = require (linhas acima) era a funï¿½ï¿½o em si. Com dbConnection() estï¿½vamos executando a funï¿½ï¿½o. Perceba que a varï¿½avel connection que usamos para conectar com o banco de dados ï¿½ a mesma que utilizamos para executar a query (connection.query) logo abaixo*/
 
-    application.get('/noticias', function (req, res) {//função vai ser executada apenas quando over requisição dessa página 
+    application.get('/noticias', function (req, res) {//funï¿½ï¿½o vai ser executada apenas quando over requisiï¿½ï¿½o dessa pï¿½gina 
 
-        var connection = application.config.dbConnection();//app - variável exportada pelo server.js. Graças ao consign, pode estabelecer conexão com Data Base assim, como se estivesse navegando até o diretório do arquivo dbConnection (perceba que em include.. then... into, estamos colocando config/dbConnection dentro de app)
-        //colocamos dentro da rota (no app.get) para que a conexão com o banco de dados seja acessada apenas somente quando essa rota for acessada, ou seja, apenas quando a página que consome o banco de dados for requisitada.
-        var noticiasModel = application.app.models.noticiasModel;
+        var connection = application.config.dbConnection();//app - variï¿½vel exportada pelo server.js. Graï¿½as ao consign, pode estabelecer conexï¿½o com Data Base assim, como se estivesse navegando atï¿½ o diretï¿½rio do arquivo dbConnection (perceba que em include.. then... into, estamos colocando config/dbConnection dentro de app)
+        //colocamos dentro da rota (no app.get) para que a conexï¿½o com o banco de dados seja acessada apenas somente quando essa rota for acessada, ou seja, apenas quando a pï¿½gina que consome o banco de dados for requisitada.
+        var noticiasModel = new application.app.models.NoticiasDAO(connection);
 
-        noticiasModel.getNoticias(connection, function (error, result) {
+        noticiasModel.getNoticias(function (error, result) {
 
-        //connection.query('select * from noticias', function (error, result) { /*query é uma função (comando) que espera 2 coisas: o sql e uma função de callback. SQL é a consulta ao banco de dados, callback é o que vai ser feito após a consulta ser realizada.Especificamente sendo função desse módulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atravéz dessa variável.*/
+        //connection.query('select * from noticias', function (error, result) { /*query ï¿½ uma funï¿½ï¿½o (comando) que espera 2 coisas: o sql e uma funï¿½ï¿½o de callback. SQL ï¿½ a consulta ao banco de dados, callback ï¿½ o que vai ser feito apï¿½s a consulta ser realizada.Especificamente sendo funï¿½ï¿½o desse mï¿½dulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atravï¿½z dessa variï¿½vel.*/
             if (error) {
                 res.send(error);
             } else {
-                //res.send(result) iria cuspir o resultados recuperados do banco de dados na forma de json. Mas o interessante é criar uma view dinâmica, ou seja: dentro da view, escrever código javascript junto com a codificação estática html.
-                res.render("noticias/noticias", { noticias: result }) /*"noticias/noticias" informa qual a view irá renderizar o conetúdo do banco de dados. O {noticias : result} é o json. Os results vão ser recebidos na nossa view como se fosse uma variável chamada "noticias".
-                 * Essa variável vai se comportar como uma array. Exemplo: 2 linhas da tabela do banco de dados são o índice 1 e 2 da array -- [{titulo: "titulo da noticia", noticia:"conteudo da noticia"}, {titulo: "outra noticia", noticia:"conteudo da outra noticia"}]*/
+                //res.send(result) iria cuspir o resultados recuperados do banco de dados na forma de json. Mas o interessante ï¿½ criar uma view dinï¿½mica, ou seja: dentro da view, escrever cï¿½digo javascript junto com a codificaï¿½ï¿½o estï¿½tica html.
+                res.render("noticias/noticias", { noticias: result }) /*"noticias/noticias" informa qual a view irï¿½ renderizar o conetï¿½do do banco de dados. O {noticias : result} ï¿½ o json. Os results vï¿½o ser recebidos na nossa view como se fosse uma variï¿½vel chamada "noticias".
+                 * Essa variï¿½vel vai se comportar como uma array. Exemplo: 2 linhas da tabela do banco de dados sï¿½o o ï¿½ndice 1 e 2 da array -- [{titulo: "titulo da noticia", noticia:"conteudo da noticia"}, {titulo: "outra noticia", noticia:"conteudo da outra noticia"}]*/
             }
         });
     });

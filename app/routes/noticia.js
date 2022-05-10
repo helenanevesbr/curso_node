@@ -1,11 +1,11 @@
-module.exports = function (app) {
-    app.get('/noticia', function (req, res) {
+module.exports = function (application) {
+    application.get('/noticia', function (req, res) {
 
-        var connection = app.config.dbConnection();
-        var noticiasModel = app.app.models.noticiasModel;//o primeiro app é para a variável desta função. Se na linha 1 estivesse module.exports = function (application), aqui seria application.app.models.noticiasModel
+        var connection = application.config.dbConnection();
+        var noticiasModel = new application.app.models.NoticiasDAO(connection);//o primeiro app ï¿½ para a variï¿½vel desta funï¿½ï¿½o. Se na linha 1 estivesse module.exports = function (application), aqui seria application.app.models.noticiasModel
 
-        //connection.query('select * from noticias where id_noticia = 2', function (error, result) {//consulta seleciona *tudo* de notícias, mas no apenas na parte onde o id_noticia = 2.
-        noticiasModel.getNoticia(connection, function (error, result) {
+        //connection.query('select * from noticias where id_noticia = 2', function (error, result) {//consulta seleciona *tudo* de notï¿½cias, mas no apenas na parte onde o id_noticia = 2.
+        noticiasModel.getNoticia(function (error, result) {
             if (error) {
                 res.send(error);
             } else {
