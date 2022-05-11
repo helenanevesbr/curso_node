@@ -23,6 +23,7 @@ consign()//aqui est� chamando a fun��o criada na linha var consign = requi
     .then('config/dbConnection.js')//para n�o ter que digitar um require('../../config/dbConnection') em cada arquivo da pasta rota.
     //Se voc� n�o apontar a extens�o do arquivo-- .js.O consign entenderia que dbConnection n�o � um m�dulo, mas um subdiret�rio da pasta config.
     .then('app/models')
+    .then('app/controllers')
     .into(app); //fun��o include do consign faz o seguinte: executa um scam no diret�rio app/routes, recupera e inicializa os m�dulos dentro dele e atribui isso a vari�vel app. Essa vari�vel vai ser par�metro (ou argumento)? da fun��o export de muitos m�dulos (v�rios arquivos come�am com module.exports = function (app)). Ou seja, todas as rotas, conex�o com banco de dados e models est�o carregados dentro vari�vel app e atrav�z dela os m�dulo tem condi��es de acessar qualquer rota, model e etc. Mas geralmente para de fato acessar, a rota/model/etc � atribu�do a uma vari�vel. Ex: �rota noticia.js ---> var noticiasModel = app.app.models.noticiasModel;
     //O consign pode fazer auto - load n�o apenas de rotas, mas tamb�m de arquivos de configra��o, de controles, etc...
 
