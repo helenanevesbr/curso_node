@@ -15,6 +15,7 @@ app.set('views', './app/views');//apontar diret�rio de views padr�o, onde o 
 
 console.log("Servidor correndo com EJS");
 
+app.use(express.static('./app/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 
