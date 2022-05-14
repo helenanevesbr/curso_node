@@ -14,6 +14,11 @@ NoticiasDAO.prototype.salvarNoticia = function(noticia, callback){
     this._connection.query('insert into noticias set ? ', noticia, callback)
 }
 
+NoticiasDAO.prototype.get5UltimasNoticias = function(callback){
+    console.log("noticias DAO get5UltimasNoticias requisitafo pelo controller");
+    this._connection.query('select * from noticias order by data_criacao desc limit 5', callback);
+}
+
 //models representam entidades do banco de dados. Cada model vai controlar uma tabela utilizada pela aplica��o. Esse, por exemplo, representa a tabela noticias do meu banco de dados.
 /*Por exemplo, noticia.js exibe uma noticia espec�fica da tabela. Se eu quiser criar outra view mostrando essa not�cia, teria que colocar no arquivo route dela 'select * from noticias where id_noticia = 2'. Agora posso simplismente colocar...
  * var noticiasModel = app.app.models.noticiasModel;

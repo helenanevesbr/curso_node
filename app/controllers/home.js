@@ -1,3 +1,11 @@
 module.exports.index = function(application, req, res){
-    res.render("home/index");//com a inclus�o do EJS, o Express passou a ter o m�todo render
+    
+    var connection = application.config.dbConnection();
+    var noticiasModel = new application.app.models.NoticiasDAO(connection);
+
+    noticiasModel.get5UltimasNoticias(function(error, result){
+        console.log(error);
+        console.log(result);
+        res.render("home/index", {noticias : result});
+    });
 };
