@@ -19,7 +19,10 @@ app.use(express.static('./app/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 
-consign()//aqui est� chamando a fun��o criada na linha var consign = require('consign');
+
+const consignConfig = process.env.HEROKU  ? {cwd: process.cwd()+"/app"} : {};
+
+consign(consignConfig)//aqui est� chamando a fun��o criada na linha var consign = require('consign');
     .include('app/routes')//include tamb�m � uma fun��o. Diret�rio que quer incluir no servidor � um par�metro.
     .then('config/dbConnection.js')//para n�o ter que digitar um require('../../config/dbConnection') em cada arquivo da pasta rota.
     //Se voc� n�o apontar a extens�o do arquivo-- .js.O consign entenderia que dbConnection n�o � um m�dulo, mas um subdiret�rio da pasta config.
