@@ -22,7 +22,6 @@ module.exports.noticia = function(application, req, res){
 
     var id_noticia = req.query;
 
-    //connection.query('select * from noticias where id_noticia = 2', function (error, result) {//consulta seleciona *tudo* de not�cias, mas no apenas na parte onde o id_noticia = 2.
     noticiasModel.getNoticia(id_noticia, function (error, result) {
         if (error) {
             res.send(error);

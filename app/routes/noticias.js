@@ -4,6 +4,7 @@ module.exports = function (application) {
     });
 
     application.get('/noticia', function(req, res){
+        console.log("noticia ..............")
         application.app.controllers.noticias.noticia(application, req, res);
     });
 }
