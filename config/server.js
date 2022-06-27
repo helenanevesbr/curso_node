@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 
 
-const consignConfig = process.env.HEROKU  ? {cwd: process.cwd()+"/app"} : {};
+const consignConfig = process.env.HEROKU  ? { cwd: process.cwd() } : {};
 
 consign(consignConfig)//aqui est� chamando a fun��o criada na linha var consign = require('consign');
     .include('app/routes')//include tamb�m � uma fun��o. Diret�rio que quer incluir no servidor � um par�metro.
