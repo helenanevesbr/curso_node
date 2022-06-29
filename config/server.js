@@ -2,7 +2,6 @@
 //Node � uma plataforma que executa c�digos javascript e o express � uma framework, uma camada que vai acima do node para fazer uma interface entre nossos scripts e o node.
 
 var express = require('express'); //o require do m�dulo (aka biblioteca) do express retorna uma fun��o, mas n�o chama ela. Agora tem uma fun��o contida na vari�vel express.
-var consign = require('consign'); //recuperando m�dulo
 var bodyParser = require('body-parser');
 var load = require('express-load');
 
