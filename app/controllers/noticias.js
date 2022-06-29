@@ -26,7 +26,6 @@ module.exports.noticia = function(application, req, res){
         if (error) {
             res.send(error);
         } else {
-            console.log(result)
             res.render("noticias/noticia", { noticia: result })
         }
     });

@@ -15,7 +15,6 @@ NoticiasDAO.prototype.salvarNoticia = function(noticia, callback){
 }
 
 NoticiasDAO.prototype.get5UltimasNoticias = function(callback){
-    console.log("Noticias DAO get5UltimasNoticias requisitado pelo controller");
     this._connection.query('select * from noticias order by data_criacao desc limit 5', callback);
 }
 
