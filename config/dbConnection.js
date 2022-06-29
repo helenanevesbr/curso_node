@@ -16,12 +16,17 @@ var connMySQL = function () {
         database: process.env.DB_DATABASE ||  'portal_noticias',
     });
 
-    connection.connect(function(err) {
-        if(err) {
-            console.error(err)
-            process.exit(1)
-        }
-    });
+    setInterval(() => {
+        connection.connect(function(err) {
+            if(err) {
+                console.error(err)
+                process.exit(1)
+            }
+        });
+
+    
+    }, 60 * 1000)
+
 
     return connection;
 }
