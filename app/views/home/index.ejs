@@ -47,7 +47,7 @@
 	    			<div class="noticia_wrapper">
 		    			<span class="noticia_autor"><%= noticias[0].autor %></span>
 		    			<a href="noticia?id_noticia=<%= noticias[0].id_noticia %>" class="noticia_titulo"><%= noticias[0].titulo %></a>
-		    			<span class="noticia_data"><%= noticias[0].data_noticia %></span>
+		    			<span class="noticia_data"><%= noticias[0].data_noticia.toLocaleDateString() %></span>
 		    			<br />
 		    			<p class="noticia_resumo">
 		    				<%= noticias[0].resumo %>
