@@ -9,7 +9,7 @@ var mysql = require('mysql');//Isso est� incorporando (aka recuperando), � a
 
 var connMySQL = function () {
     console.log('Conexao com DB foi estabelecida');
-    var connection = mysql.createConnection({ //createConnection � uma fun��o do m�dulo MySQL para fazer uma conex�o com o banco de dados. Os par�metros dessa conex�o s�o passados em uma estrutura JSON, como voc� pode ver abaixo.
+    var connection = mysql.createPool({ //createConnection � uma fun��o do m�dulo MySQL para fazer uma conex�o com o banco de dados. Os par�metros dessa conex�o s�o passados em uma estrutura JSON, como voc� pode ver abaixo.
         host: process.env.DB_HOST || 'localhost', //endere�o do servidor. No caso est� instalado na pr�pria m�quina que o est� rodando.
         user:  process.env.DB_USER || 'helena',
         password: process.env.DB_PASSWORD ||  'password',
