@@ -1,6 +1,6 @@
 ﻿module.exports = function (application) {
     application.get('/formulario_inclusao_noticia', function (req, res) {
-        if (process.env.ADMIN_ENABLED){
+        if (process.env.ADMIN_ENABLED === 'true'){
             application.app.controllers.admin.formulario_inclusao_noticia(application, req, res);
         }
         else{
