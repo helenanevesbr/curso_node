@@ -4,7 +4,7 @@
             application.app.controllers.admin.formulario_inclusao_noticia(application, req, res);
         }
         else{
-        res.end('Page is unavailable')
+        res.status(404).end('Page is unavailable')
         }
     });
     application.post('/noticias/salvar', function (req, res){
