@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var load = require('express-load');
 
 var expressValidator = require('express-validator')
+var expressSession = require('express-session')
 
 var app = express(); //� necess�rio que chamemos a fun��o.
 /*var msg = require('./mod_teste')();//sempre que um m�dulo retorna uma fun��o, � necess�rio que executemos essa fun��o (no caso basta "()" porque a fun��o � an�nima -- s� checar o c�digo dentro do arquivo mod_teste). Em var express e var app estamos fazendo a mesma coisa.
@@ -20,6 +21,11 @@ app.use(express.static('./app/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 
+app.use(expressSession({
+    secret:'kakaroto',
+    resave: false,
+    saveUninitialized: false
+}));
 
 load({cwd:'app'})
     .then('app/controllers')
@@ -27,16 +33,5 @@ load({cwd:'app'})
     .then('config/dbConnection.js')
     .then('app/models')
     .into(app);
-
-/*
-const consignConfig = process.env.HEROKU  ? { cwd: process.cwd() } : {};
-
-consign(consignConfig)
-    .include('app/routes')
-    .then('config/dbConnection.js')
-    .then('app/models')
-    .then('app/controllers')
-    .into(app);
-*/
 
 module.exports = app;

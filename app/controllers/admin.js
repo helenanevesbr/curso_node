@@ -33,3 +33,28 @@ module.exports.noticias_salvar = function(application, req, res){
         }
     });
 }
+
+module.exports.login = function(application, req, res){
+    res.render("admin/login", {validacao: {}});
+}
+
+module.exports.autenticar = function(application, req, res){
+    var dadosForm = req.body;
+
+    req.assert('usuario', 'Usuario não deve ser vazio').notEmpty();
+    req.assert('senha', 'Senha não deve ser vazia').notEmpty();
+
+    var erros = req.validationErrors();
+    console.log(erros)
+    if(erros){
+        res.render("admin/login", {validacao : erros});
+        return
+    }
+
+    var connection = application.config.dbConnection();
+    var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
+    
+    UsuariosDAO.autenticar();
+
+    res.send('tudo ok para criar a sessão')
+}
