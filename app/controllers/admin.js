@@ -1,6 +1,6 @@
-/*module.exports.formulario_inclusao_noticia = function(application, req, res){
+module.exports.formulario_inclusao_noticia = function(application, req, res){
     res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
-}*/
+}
 
 module.exports.noticias_salvar = function(application, req, res){
     var noticia = req.body; //noticia é a variável que contém o json que será recuperado do body da nossa request
