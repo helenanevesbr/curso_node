@@ -15,7 +15,7 @@ var connMySQL = function () {
         password: process.env.DB_PASSWORD ||  'password',
         database: process.env.DB_DATABASE ||  'portal_noticias',
     });
-
+    connection.on('query', function(query) { console.log(query.sql) });
     return connection;
 }
 

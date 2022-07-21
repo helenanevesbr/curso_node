@@ -1,6 +1,6 @@
-module.exports.formulario_inclusao_noticia = function(application, req, res){
+/*module.exports.formulario_inclusao_noticia = function(application, req, res){
     res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
-}
+}*/
 
 module.exports.noticias_salvar = function(application, req, res){
     var noticia = req.body; //noticia é a variável que contém o json que será recuperado do body da nossa request
@@ -39,13 +39,12 @@ module.exports.login = function(application, req, res){
 }
 
 module.exports.autenticar = function(application, req, res){
-    var dadosForm = req.body;
+    var dadosLogin = req.body;
 
     req.assert('usuario', 'Usuario não deve ser vazio').notEmpty();
     req.assert('senha', 'Senha não deve ser vazia').notEmpty();
 
     var erros = req.validationErrors();
-    console.log(erros)
     if(erros){
         res.render("admin/login", {validacao : erros});
         return
@@ -54,7 +53,18 @@ module.exports.autenticar = function(application, req, res){
     var connection = application.config.dbConnection();
     var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
     
-    UsuariosDAO.autenticar();
-
-    res.send('tudo ok para criar a sessão')
+    UsuariosDAO.autenticar(dadosLogin, function (error, result){
+        console.log(result,typeof result)
+        if (error) {
+            res.status(401).send(error);
+        }
+        else {
+            if (result.length !== 1){
+                res.status(401).send("Usuario invalido")
+            }
+            else{
+                res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
+            }
+        }
+    });
 }

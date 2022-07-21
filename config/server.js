@@ -27,6 +27,13 @@ app.use(expressSession({
     saveUninitialized: false
 }));
 
+/*
+app.use(function(req, res, next){
+    console.log(req.headers);
+    next();
+})
+*/
+
 load({cwd:'app'})
     .then('app/controllers')
     .then('app/routes')

@@ -7,7 +7,7 @@ NoticiasDAO.prototype.getNoticias = function(callback){
 }
 
 NoticiasDAO.prototype.getNoticia = function(id_noticia, callback) {
-    this._connection.query('select * from noticias where id_noticia = ' + id_noticia.id_noticia, callback);
+    this._connection.query('select * from noticias where id_noticia = ' + id_noticia.id_noticia, callback); //Essa forma de interpolar funciona para id_noticia porque ele é um número e não uma string. observe como UsuariosDAO ficou.
 }
 
 NoticiasDAO.prototype.salvarNoticia = function(noticia, callback){
