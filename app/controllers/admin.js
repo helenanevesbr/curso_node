@@ -64,8 +64,7 @@ module.exports.autenticar = function(application, req, res){
             }
             else{
                 req.session.userInfo = dadosLogin.usuario;
-                res.send("Hello" + req.session.userInfo)
-                //res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
+                res.render("admin/form_add_noticia", {validacao: {}, noticia : {}, nomeUsuario : {} });
             }
         }
     });
