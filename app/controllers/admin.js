@@ -63,7 +63,9 @@ module.exports.autenticar = function(application, req, res){
                 res.status(401).send("Usuario invalido")
             }
             else{
-                res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
+                req.session.userInfo = dadosLogin.usuario;
+                res.send("Hello" + req.session.userInfo)
+                //res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
             }
         }
     });
