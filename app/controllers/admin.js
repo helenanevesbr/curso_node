@@ -1,7 +1,3 @@
-module.exports.formulario_inclusao_noticia = function(application, req, res){
-    res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
-}
-
 module.exports.noticias_salvar = function(application, req, res){
     var noticia = req.body; //noticia é a variável que contém o json que será recuperado do body da nossa request
     //res.send(noticias); e esse json era exatamente o que aparecia quando essa função rodava. Ela rodava inseriamos algo no formulário e clicavamos em enviar.
@@ -54,7 +50,6 @@ module.exports.autenticar = function(application, req, res){
     var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
     
     UsuariosDAO.autenticar(dadosLogin, function (error, result){
-        console.log(result,typeof result)
         if (error) {
             res.status(401).send(error);
         }
@@ -63,8 +58,34 @@ module.exports.autenticar = function(application, req, res){
                 res.status(401).send("Usuario invalido")
             }
             else{
-                req.session.userInfo = dadosLogin.usuario;
-                res.render("admin/form_add_noticia", {validacao: {}, noticia : {}, dadosLogin : result });
+                req.session.autorizado = true;
+                req.session.nome_do_usuario = result[0].nome_do_usuario;
+                console.log(req.session.nome_do_usuario);
+                res.redirect("editar_noticias"); //redirect é um comando do navegador, e o navegador não conhece o nome da sua view. Diferente do render, você deve colocar o nome da route, não o nome da view.
+            }
+        }
+    });
+}
+
+module.exports.formulario_inclusao_noticia = function(application, req, res){
+    if(req.session.autorizado){
+        res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
+    } else{
+        res.send('Usuário precisa fazer login');
+    }
+}
+module.exports.editar_noticias = function(application, req, res){
+    var connection = application.config.dbConnection();
+    var noticiasModel = new application.app.models.NoticiasDAO(connection);
+
+    noticiasModel.getNoticias(function (error, result) {
+        if (error) {
+            res.send(error);
+        } else {
+            if(req.session.autorizado){
+                res.render("admin/edit_noticias", { noticias: result });
+            } else{
+                res.send('Usuário precisa fazer login');
             }
         }
     });
