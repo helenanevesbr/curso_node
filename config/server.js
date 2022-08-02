@@ -46,7 +46,6 @@ load({cwd:'app'})
     .then('app/routes')
     .then('config/dbConnection.js')
     .then('config/token.js')
-    .then('app/models')
     .into(app);
 
 module.exports = app;

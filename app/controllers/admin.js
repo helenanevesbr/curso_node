@@ -1,4 +1,6 @@
 var jwt = require('jsonwebtoken');
+const NoticiasDAO = require("../models/NoticiasDAO")
+const UsuariosDAO = require("../models/UsuariosDAO")
 
 module.exports.noticias_salvar = (application, req, res) => {
     var noticia = req.body; //noticia é a variável que contém o json que será recuperado do body da nossa request
@@ -20,7 +22,7 @@ module.exports.noticias_salvar = (application, req, res) => {
 
     var connection = application.config.dbConnection();//app - vari�vel exportada pelo server.js. Gra�as ao consign, pode estabelecer conex�o com Data Base assim, como se estivesse navegando at� o diret�rio do arquivo dbConnection (perceba que em include.. then... into, estamos colocando config/dbConnection dentro de app)
     //colocamos dentro da rota (no app.get) para que a conex�o com o banco de dados seja acessada apenas somente quando essa rota for acessada, ou seja, apenas quando a p�gina que consome o banco de dados for requisitada.
-    var noticiasModel = new application.app.models.NoticiasDAO(connection);
+    var noticiasModel = new NoticiasDAO(connection);
 
     noticiasModel.salvarNoticia(noticia, (error, result) => {//connection.query('select * from noticias', function (error, result) { /*query � uma fun��o (comando) que espera 2 coisas: o sql e uma fun��o de callback. SQL � a consulta ao banco de dados, callback � o que vai ser feito ap�s a consulta ser realizada.Especificamente sendo fun��o desse m�dulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atrav�z dessa vari�vel.*/
         if (error) {
@@ -49,9 +51,9 @@ module.exports.autenticar = (application, req, res) =>{
     }
 
     var connection = application.config.dbConnection();
-    var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
+    var usuariosDAO = new UsuariosDAO(connection);
     
-    UsuariosDAO.autenticar(dadosLogin, (error, result) => {
+    usuariosDAO.autenticar(dadosLogin, (error, result) => {
         if (error) {
             res.status(401).send(error);
         }
@@ -83,7 +85,7 @@ module.exports.formulario_inclusao_noticia = (application, req, res) => {
 
 module.exports.editar_noticias = (application, req, res) => {
     var connection = application.config.dbConnection();
-    var noticiasModel = new application.app.models.NoticiasDAO(connection);
+    var noticiasModel = new NoticiasDAO(connection);
 
     noticiasModel.getNoticias( (error, result) => {
         if (error) {
@@ -97,7 +99,7 @@ module.exports.editar_noticias = (application, req, res) => {
 module.exports.sair = (application, req, res) => {
     req.session.destroy( (err) => {
         var connection = application.config.dbConnection();
-        var noticiasModel = new application.app.models.NoticiasDAO(connection);
+        var noticiasModel = new NoticiasDAO(connection);
 
         noticiasModel.get5UltimasNoticias( (error, result) => {
             res.render("home/index", {noticias : result});
