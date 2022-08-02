@@ -9,7 +9,7 @@ var expressValidator = require('express-validator')
 
 var jwt = require('jsonwebtoken');
 require("dotenv").config();
-var secretToken = require('./token')()()
+const SECRET = require('./token')
 var cookieParser = require('cookie-parser')
 
 var app = express(); //� necess�rio que chamemos a fun��o.
@@ -34,7 +34,7 @@ app.use( (req, res, next) => {
     } else if (req.baseUrl.startsWith('/admin/autenticar')) {
         next()
     } else if (req.baseUrl.startsWith('/admin/')) {
-        jwt.verify(req.cookies.token, secretToken)
+        jwt.verify(req.cookies.token, SECRET)
         next()
     } else {
         next()
@@ -44,8 +44,6 @@ app.use( (req, res, next) => {
 load({cwd:'app'})
     .then('app/controllers')
     .then('app/routes')
-    .then('config/dbConnection.js')
-    .then('config/token.js')
     .into(app);
 
 module.exports = app;

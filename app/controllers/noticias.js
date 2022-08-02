@@ -1,11 +1,9 @@
 const NoticiasDAO = require("../models/NoticiasDAO")
 
 module.exports.noticias = (application, req, res) => {
-    var connection = application.config.dbConnection();//app - vari�vel exportada pelo server.js. Gra�as ao consign, pode estabelecer conex�o com Data Base assim, como se estivesse navegando at� o diret�rio do arquivo dbConnection (perceba que em include.. then... into, estamos colocando config/dbConnection dentro de app)
-    //colocamos dentro da rota (no app.get) para que a conex�o com o banco de dados seja acessada apenas somente quando essa rota for acessada, ou seja, apenas quando a p�gina que consome o banco de dados for requisitada.
-    var noticiasModel = new NoticiasDAO(connection);
 
-    noticiasModel.getNoticias( (error, result) => {
+
+    NoticiasDAO.getNoticias( (error, result) => {
 
     //connection.query('select * from noticias', function (error, result) { /*query � uma fun��o (comando) que espera 2 coisas: o sql e uma fun��o de callback. SQL � a consulta ao banco de dados, callback � o que vai ser feito ap�s a consulta ser realizada.Especificamente sendo fun��o desse m�dulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atrav�z dessa vari�vel.*/
         if (error) {
@@ -19,12 +17,10 @@ module.exports.noticias = (application, req, res) => {
 }
 
 module.exports.noticia = (application, req, res) => {
-    var connection = application.config.dbConnection();
-    var noticiasModel = new NoticiasDAO(connection);
 
     var id_noticia = req.query;
 
-    noticiasModel.getNoticia(id_noticia, (error, result) => {
+    NoticiasDAO.getNoticia(id_noticia, (error, result) => {
         if (error) {
             res.send(error);
         } else {

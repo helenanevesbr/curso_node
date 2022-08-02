@@ -1,3 +1,5 @@
+const dbConnection = require("../../config/dbConnection")
+
 class NoticiasDAO {
 
     constructor(connection) {
@@ -21,4 +23,4 @@ class NoticiasDAO {
     }    
 }
 
-module.exports = NoticiasDAO
+module.exports = new NoticiasDAO(dbConnection)
