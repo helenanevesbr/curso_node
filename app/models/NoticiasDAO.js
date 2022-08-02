@@ -2,19 +2,19 @@ function NoticiasDAO(connection){
     this._connection = connection;
 }
 
-NoticiasDAO.prototype.getNoticias = function(callback){
+NoticiasDAO.prototype.getNoticias = (callback) => {
     this._connection.query('select * from noticias order by data_criacao desc', callback);
 }
 
-NoticiasDAO.prototype.getNoticia = function(id_noticia, callback) {
+NoticiasDAO.prototype.getNoticia = (id_noticia, callback) => {
     this._connection.query('select * from noticias where id_noticia = ' + id_noticia.id_noticia, callback); //Essa forma de interpolar funciona para id_noticia porque ele é um número e não uma string. observe como UsuariosDAO ficou.
 }
 
-NoticiasDAO.prototype.salvarNoticia = function(noticia, callback){
+NoticiasDAO.prototype.salvarNoticia = (noticia, callback) => {
     this._connection.query('insert into noticias set ? ', noticia, callback)
 }
 
-NoticiasDAO.prototype.get5UltimasNoticias = function(callback){
+NoticiasDAO.prototype.get5UltimasNoticias = (callback) => {
     this._connection.query('select * from noticias order by data_criacao desc limit 5', callback);
 }
 
@@ -24,7 +24,7 @@ NoticiasDAO.prototype.get5UltimasNoticias = function(callback){
  * noticiasModel.getNoticia(connection,
  * ... e vir checar em noticiasModel qual parte do banco de dados est� sendo consultada. Ou mesmo alterar a consulta apra todas as views de uma vez s� em vez de precisar alterar o c�digo em cada arquivo de rota.*/
 
-module.exports = function () {
+module.exports = () => {
 
     /*this.getNoticias = function(connection, callback){
         connection.query('select * from noticias', callback);//getNoticias � fun��o. Isso � o m�todo wrapper que utilizamos para evitar que autoload do consign no server.js criasse uma conex�o com o banco de dados cada vez que fosse a aplica��o fosse rodada. Wrapper, no caso, est� colocar uma fun��o dentro de uma fun��o, para que a primeira seja executada automaticamente, mas a segunda precise ser chamada assim: noticiasModel.getNoticias(connection,

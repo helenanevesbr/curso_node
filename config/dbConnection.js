@@ -7,7 +7,7 @@
 
 var mysql = require('mysql');//Isso est� incorporando (aka recuperando), � aplica��o, o m�dulo baixado no passo 1
 
-var connMySQL = function () {
+var connMySQL = () => {
     console.log('Conexao com DB foi estabelecida');
     var connection = mysql.createPool({ //createConnection � uma fun��o do m�dulo MySQL para fazer uma conex�o com o banco de dados. Os par�metros dessa conex�o s�o passados em uma estrutura JSON, como voc� pode ver abaixo.
         host: process.env.DB_HOST || 'localhost', //endere�o do servidor. No caso est� instalado na pr�pria m�quina que o est� rodando.
@@ -15,11 +15,11 @@ var connMySQL = function () {
         password: process.env.DB_PASSWORD ||  'password',
         database: process.env.DB_DATABASE ||  'portal_noticias',
     });
-    connection.on('query', function(query) { console.log(query.sql) });
+    connection.on('query', (query) => { console.log(query.sql) });
     return connection;
 }
 
-module.exports = function () { //Antes do m�dulo consign, exportavamos o mysql.createConnection como uma fun��o. Dentro do c�digo de cada arquivo de rota precisava existir um require do m�dulo dbConnection. Lembrando: o comando exportar diz o que o c�digo vai exportar para um comando require.
+module.exports = () => { //Antes do m�dulo consign, exportavamos o mysql.createConnection como uma fun��o. Dentro do c�digo de cada arquivo de rota precisava existir um require do m�dulo dbConnection. Lembrando: o comando exportar diz o que o c�digo vai exportar para um comando require.
     console.log('O autoload carregou o modulo de conex�o com o banco de dados, mas a conexao com DB n�o foi estabelecida')//a conex�o ser� estabelecida apenas quando assim desejarmos. Com dbConnection.js exportando a var�avel connMySQL, ele deixa a fun��o contida nela dispon�vel para qualquer m�dulo requisitar, sem que ela seja automaticamente executada pelo cosign toda vez que o app.js � executado.
     return connMySQL;//Antes do m�dulo consign, tudo dentro de return da fun��o na vari�vel connMySQL (c�digo que come�a com var connMySQL = function ()) era o return da fun��o do exports. Depois do m�dulo consign, o return do exports para o server.js � apenas a vari�vel connMySQL. Isso porque server.js utiliza o m�dulo consign e ele executa fun��es automaticamente.
 }

@@ -1,4 +1,6 @@
-module.exports.noticias_salvar = function(application, req, res){
+var jwt = require('jsonwebtoken');
+
+module.exports.noticias_salvar = (application, req, res) => {
     var noticia = req.body; //noticia é a variável que contém o json que será recuperado do body da nossa request
     //res.send(noticias); e esse json era exatamente o que aparecia quando essa função rodava. Ela rodava inseriamos algo no formulário e clicavamos em enviar.
 
@@ -20,7 +22,7 @@ module.exports.noticias_salvar = function(application, req, res){
     //colocamos dentro da rota (no app.get) para que a conex�o com o banco de dados seja acessada apenas somente quando essa rota for acessada, ou seja, apenas quando a p�gina que consome o banco de dados for requisitada.
     var noticiasModel = new application.app.models.NoticiasDAO(connection);
 
-    noticiasModel.salvarNoticia(noticia, function (error, result) {//connection.query('select * from noticias', function (error, result) { /*query � uma fun��o (comando) que espera 2 coisas: o sql e uma fun��o de callback. SQL � a consulta ao banco de dados, callback � o que vai ser feito ap�s a consulta ser realizada.Especificamente sendo fun��o desse m�dulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atrav�z dessa vari�vel.*/
+    noticiasModel.salvarNoticia(noticia, (error, result) => {//connection.query('select * from noticias', function (error, result) { /*query � uma fun��o (comando) que espera 2 coisas: o sql e uma fun��o de callback. SQL � a consulta ao banco de dados, callback � o que vai ser feito ap�s a consulta ser realizada.Especificamente sendo fun��o desse m�dulo, o callback espera 2 coisas: o erro e o resultado. Se der algum erro, conseguimos recuperar ele atrav�z dessa vari�vel.*/
         if (error) {
             res.send(error);
         } else {
@@ -30,11 +32,11 @@ module.exports.noticias_salvar = function(application, req, res){
     });
 }
 
-module.exports.login = function(application, req, res){
+module.exports.login = (application, req, res) => {
     res.render("admin/login", {validacao: {}});
 }
 
-module.exports.autenticar = function(application, req, res){
+module.exports.autenticar = (application, req, res) =>{
     var dadosLogin = req.body;
 
     req.assert('usuario', 'Usuario não deve ser vazio').notEmpty();
@@ -49,44 +51,56 @@ module.exports.autenticar = function(application, req, res){
     var connection = application.config.dbConnection();
     var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
     
-    UsuariosDAO.autenticar(dadosLogin, function (error, result){
+    UsuariosDAO.autenticar(dadosLogin, (error, result) => {
         if (error) {
             res.status(401).send(error);
         }
         else {
             if (result.length !== 1){
-                res.status(401).send("Usuario invalido")
+                res.status(500).send("Usuario invalido")
             }
             else{
-                req.session.autorizado = true;
-                req.session.nome_do_usuario = result[0].nome_do_usuario;
-                console.log(req.session.nome_do_usuario);
-                res.redirect("editar_noticias"); //redirect é um comando do navegador, e o navegador não conhece o nome da sua view. Diferente do render, você deve colocar o nome da route, não o nome da view.
+                var id = result[0].id_usuario
+                var nomeDoUsuario =  result[0].nome_do_usuario
+
+                var secret = application.config.token();
+                var token = jwt.sign({ id , nomeDoUsuario}, secret, {
+                    expiresIn: 300
+                });
+
+                res.cookie('token', token, {
+                    maxAge: 60*1000,
+                });
+                return res.redirect("/admin/editar_noticias");
             }
         }
     });
 }
 
-module.exports.formulario_inclusao_noticia = function(application, req, res){
-    if(req.session.autorizado){
-        res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
-    } else{
-        res.send('Usuário precisa fazer login');
-    }
+module.exports.formulario_inclusao_noticia = (application, req, res) => {
+    res.render("admin/form_add_noticia", {validacao: {}, noticia : {}});
 }
-module.exports.editar_noticias = function(application, req, res){
+
+module.exports.editar_noticias = (application, req, res) => {
     var connection = application.config.dbConnection();
     var noticiasModel = new application.app.models.NoticiasDAO(connection);
 
-    noticiasModel.getNoticias(function (error, result) {
+    noticiasModel.getNoticias( (error, result) => {
         if (error) {
             res.send(error);
         } else {
-            if(req.session.autorizado){
-                res.render("admin/edit_noticias", { noticias: result });
-            } else{
-                res.send('Usuário precisa fazer login');
-            }
+            res.render("admin/edit_noticias", { noticias: result });
         }
+    });
+}
+
+module.exports.sair = (application, req, res) => {
+    req.session.destroy( (err) => {
+        var connection = application.config.dbConnection();
+        var noticiasModel = new application.app.models.NoticiasDAO(connection);
+
+        noticiasModel.get5UltimasNoticias( (error, result) => {
+            res.render("home/index", {noticias : result});
+        });
     });
 }

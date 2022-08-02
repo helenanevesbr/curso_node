@@ -6,7 +6,11 @@ var bodyParser = require('body-parser');
 var load = require('express-load');
 
 var expressValidator = require('express-validator')
-var expressSession = require('express-session')
+
+var jwt = require('jsonwebtoken');
+require("dotenv").config();
+var secretToken = require('./token')()()
+var cookieParser = require('cookie-parser')
 
 var app = express(); //� necess�rio que chamemos a fun��o.
 /*var msg = require('./mod_teste')();//sempre que um m�dulo retorna uma fun��o, � necess�rio que executemos essa fun��o (no caso basta "()" porque a fun��o � an�nima -- s� checar o c�digo dentro do arquivo mod_teste). Em var express e var app estamos fazendo a mesma coisa.
@@ -20,24 +24,28 @@ console.log("Servidor correndo com EJS");
 app.use(express.static('./app/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
+app.use(cookieParser())
 
-app.use(expressSession({
-    secret:'kakaroto',
-    resave: false,
-    saveUninitialized: false
-}));
+app.use( (req, res, next) => {
 
-/*
-app.use(function(req, res, next){
-    console.log(req.headers);
-    next();
-})
-*/
+    console.log(req.url, req.baseUrl)
+    if (req.baseUrl.startsWith('/admin/login')) {
+        next()
+    } else if (req.baseUrl.startsWith('/admin/autenticar')) {
+        next()
+    } else if (req.baseUrl.startsWith('/admin/')) {
+        jwt.verify(req.cookies.token, secretToken)
+        next()
+    } else {
+        next()
+    }
+});
 
 load({cwd:'app'})
     .then('app/controllers')
     .then('app/routes')
     .then('config/dbConnection.js')
+    .then('config/token.js')
     .then('app/models')
     .into(app);
 
