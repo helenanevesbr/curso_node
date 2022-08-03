@@ -1,9 +1,7 @@
-module.exports = (application) => {
-    application.get('/noticias', (req, res) => {
-        application.app.controllers.noticias.noticias(application, req, res);
-    });
+const noticiasController = require("../controllers/noticias")
 
-    application.get('/noticia', (req, res) => {
-        application.app.controllers.noticias.noticia(application, req, res);
-    });
+module.exports = (application) => {
+    application.get('/noticias', noticiasController.noticias);
+
+    application.get('/noticia', noticiasController.noticia);
 }

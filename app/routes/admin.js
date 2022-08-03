@@ -1,25 +1,18 @@
-﻿module.exports = (application) => {
-    application.post('/admin/noticias/salvar', (req, res) => {
-        application.app.controllers.admin.noticias_salvar(application, req, res);
-    });
+﻿const adminController = require("../controllers/admin")
 
-    application.get('/admin/login', (req, res) => {
-        application.app.controllers.admin.login(application, req, res);
-    });
+module.exports = (application) => {
+    application.get('/admin/login', adminController.login);
     
-    application.post('/admin/autenticar', (req, res) => {
-        application.app.controllers.admin.autenticar(application, req, res);
-    });
+    application.post('/admin/autenticar', adminController.autenticar);
 
-    application.get('/admin/formulario_inclusao_noticia', (req, res) => {
-        application.app.controllers.admin.formulario_inclusao_noticia(application, req, res);
-    });
+    application.get('/admin/editar_noticias', adminController.editar_noticias);
 
-    application.get('/admin/editar_noticias', (req, res) => {
-        application.app.controllers.admin.editar_noticias(application, req, res);
-    });
-
+    application.get('/admin/formulario_inclusao_noticia', adminController.formulario_inclusao_noticia);
+    
+    application.post('/admin/noticias/salvar', adminController.noticias_salvar);
+/*
     application.get('/admin/sair', (req, res) => {
         application.app.controllers.admin.sair(application, req, res);
     });
+*/
 }

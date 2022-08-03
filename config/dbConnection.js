@@ -23,7 +23,4 @@ class DBConnection {
     }
 }
 
-const uniqueInstance = new DBConnection()
-
-
-module.exports = uniqueInstance;
+module.exports = new DBConnection();

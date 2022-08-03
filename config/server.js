@@ -1,18 +1,17 @@
 // JavaScript source code
 //Node � uma plataforma que executa c�digos javascript e o express � uma framework, uma camada que vai acima do node para fazer uma interface entre nossos scripts e o node.
 
-var express = require('express'); //o require do m�dulo (aka biblioteca) do express retorna uma fun��o, mas n�o chama ela. Agora tem uma fun��o contida na vari�vel express.
-var bodyParser = require('body-parser');
-var load = require('express-load');
+const express = require('express'); //o require do m�dulo (aka biblioteca) do express retorna uma fun��o, mas n�o chama ela. Agora tem uma fun��o contida na vari�vel express.
+const bodyParser = require('body-parser');
 
-var expressValidator = require('express-validator')
+const expressValidator = require('express-validator');
 
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 require("dotenv").config();
-const SECRET = require('./token')
-var cookieParser = require('cookie-parser')
+const SECRET = require('./token');
+const cookieParser = require('cookie-parser');
 
-var app = express(); //� necess�rio que chamemos a fun��o.
+const app = express(); //� necess�rio que chamemos a fun��o.
 /*var msg = require('./mod_teste')();//sempre que um m�dulo retorna uma fun��o, � necess�rio que executemos essa fun��o (no caso basta "()" porque a fun��o � an�nima -- s� checar o c�digo dentro do arquivo mod_teste). Em var express e var app estamos fazendo a mesma coisa.
 //como o m�dulo est� dentro do diret�rio curso_node, � boa pr�tica utilizar o "./" */
 
@@ -41,9 +40,12 @@ app.use( (req, res, next) => {
     }
 });
 
-load({cwd:'app'})
-    .then('app/controllers')
-    .then('app/routes')
-    .into(app);
+const homeRoute = require('../app/routes/home');
+const adminRoute = require('../app/routes/admin');
+const noticiasRoute = require('../app/routes/noticias');
+
+homeRoute(app);
+adminRoute(app)
+noticiasRoute(app);
 
 module.exports = app;
