@@ -44,3 +44,10 @@ a:hover{
 	background:#FFF;
 	padding:20px;
 }
+
+.noticia_imagem {
+	width: 300px;
+	border: 3px dotted grey;
+	padding: 5px;
+	margin: 10px;
+}
