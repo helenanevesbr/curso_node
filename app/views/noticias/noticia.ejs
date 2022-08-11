@@ -46,14 +46,16 @@
 	    	<div class="row">
 	    		<div class="col-md-12">
 	    			<div class="noticia_wrapper">
-		    			<span class="noticia_autor"><%= noticia[0].autor %></span>
-		    			<a href="noticia/1" class="noticia_titulo"><%= noticia[0].titulo %></a>
-		    			<span class="noticia_data"><%= noticia[0].data_criacao.toLocaleDateString("en-GB") %></span>
-		    			<br />
-		    			<p class="noticia_resumo">
-		    				<%= noticia[0].noticia %>
-		    			</p>
-						<img class="noticia_imagem" src="images/<%= noticia[0].imagem%>">
+						<div>
+							<img class="noticia_imagem" src="images/<%= noticia[0].imagem%>">
+						</div>
+						<div>
+							<span class="noticia_autor"><%= noticia[0].autor %></span>
+							<a href="noticia/1" class="noticia_titulo"><%= noticia[0].titulo %></a>
+							<span class="noticia_data"><%= noticia[0].data_criacao.toLocaleDateString("en-GB") %></span>
+							<br />
+							<p class="noticia_resumo"><%= noticia[0].noticia %></p>
+						</div>
 		    		</div>
 		    	</div>
 	    	</div>

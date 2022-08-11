@@ -36,19 +36,19 @@ class AdminController{
                     });
 
                     res.cookie('token', token, {
-                        maxAge: 60*1000,
+                        maxAge: 6000*1000,
                     });
-                    return res.redirect("/admin/editar_noticias");
+
+
+                    res.cookie('userName', nomeDoUsuario, {
+                        maxAge: 6000*1000,
+                    });
+
+                    const decoded = jwt.decode(token).nomeDoUsuario;
+                    console.log("Isso é decoded",decoded);
+
+                    return res.redirect("/admin/formulario_inclusao_noticia");
                 }
-            }
-        });
-    }
-    editar_noticias(req, res){
-        NoticiasDAO.getNoticias( (error, result) => {
-            if (error) {
-                res.send(error);
-            } else {
-                res.render("admin/edit_noticias", { noticias: result });
             }
         });
     }

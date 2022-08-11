@@ -44,24 +44,32 @@
 	    <div class="container">
 	    	<div class="row">
 	    		<div class="col-md-8">
-	    			<div class="noticia_wrapper">
-		    			<span class="noticia_autor"><%= noticias[0].autor %></span>
-		    			<a href="noticia?id_noticia=<%= noticias[0].id_noticia %>" class="noticia_titulo"><%= noticias[0].titulo %></a>
-		    			<span class="noticia_data"><%= noticias[0].data_criacao.toLocaleDateString("en-GB") %></span>
-		    			<br />
-		    			<p class="noticia_resumo"><%= noticias[0].resumo %></p>
-						<img class="noticia_imagem" src="images/<%= noticias[0].imagem%>">
+	    			<div class="noticia_wrapper column">
+						<div>
+							<img class="noticia_imagem first_page_img" src="images/<%= noticias[0].imagem%>">
+						</div>
+						<div>
+							<span class="noticia_autor"><%= noticias[0].autor %></span>
+							<a href="noticia?id_noticia=<%= noticias[0].id_noticia %>" class="noticia_titulo"><%= noticias[0].titulo %></a>
+							<span class="noticia_data"><%= noticias[0].data_criacao.toLocaleDateString("en-GB") %></span>
+							<br />
+							<p class="noticia_resumo"><%= noticias[0].resumo %></p>
+						</div>
 		    		</div>
 		    	</div>
 
 	    		<div class="col-md-4">
-	    			<div class="noticia_wrapper">
-		    			<span class="noticia_autor"><%= noticias[1].autor %></span>
-		    			<a href="noticia?id_noticia=<%= noticias[1].id_noticia %>" class="noticia_titulo"><%= noticias[1].titulo %></a>
-		    			<span class="noticia_data"><%= noticias[1].data_criacao.toLocaleDateString("en-GB") %></span>
-		    			<br />
-		    			<p class="noticia_resumo"><%= noticias[1].resumo %></p>
-						<img class="noticia_imagem" src="images/<%= noticias[1].imagem%>">
+	    			<div class="noticia_wrapper column-reverse">
+						<div>
+							<img class="noticia_imagem" src="images/<%= noticias[1].imagem%>">
+						</div>
+						<div>
+							<span class="noticia_autor"><%= noticias[1].autor %></span>
+							<a href="noticia?id_noticia=<%= noticias[1].id_noticia %>" class="noticia_titulo"><%= noticias[1].titulo %></a>
+							<span class="noticia_data"><%= noticias[1].data_criacao.toLocaleDateString("en-GB") %></span>
+							<br />
+							<p class="noticia_resumo"><%= noticias[1].resumo %></p>
+						</div>
 		    		</div>
 		    	</div>
 	    	</div>
@@ -69,13 +77,17 @@
 	    	<div class="row">
 				<% for(var i = 2; i < noticias.length; i++) { %>
 	    		<div class="col-md-4">
-	    			<div class="noticia_wrapper">
-		    			<span class="noticia_autor"><%= noticias[i].autor %></span>
-		    			<a href="noticia?id_noticia=<%= noticias[i].id_noticia %>" class="noticia_titulo"><%= noticias[i].titulo %></a>
-		    			<span class="noticia_data"><%= noticias[i].data_criacao.toLocaleDateString("en-GB") %></span>
-		    			<br />
-		    			<p class="noticia_resumo"><%= noticias[i].resumo %></p>
-						<img class="noticia_imagem" src="images/<%= noticias[i].imagem%>">
+	    			<div class="noticia_wrapper column-reverse">
+						<div>
+							<img class="noticia_imagem" src="images/<%= noticias[i].imagem%>">
+						</div>
+						<div>
+							<span class="noticia_autor"><%= noticias[i].autor %></span>
+							<a href="noticia?id_noticia=<%= noticias[i].id_noticia %>" class="noticia_titulo"><%= noticias[i].titulo %></a>
+							<span class="noticia_data"><%= noticias[i].data_criacao.toLocaleDateString("en-GB") %></span>
+							<br />
+							<p class="noticia_resumo"><%= noticias[i].resumo %></p>
+						</div>
 		    		</div>
 		    	</div>
 				<% } %>
