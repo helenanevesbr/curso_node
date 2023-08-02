@@ -3,7 +3,7 @@ Fake News - My NodeJS Study
 
 ## Summary
 
-My first website is for my dogs, cats and **rooster**: http://zebrapintada.com.br/
+My first website is for my dogs, cats and **rooster**
 
 I've developed this application using NodeJS integrated with MySQL as database and MVC as the design pattern.
 
